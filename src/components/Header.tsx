@@ -16,12 +16,15 @@ const Header = (): JSX.Element  => {
             </div>
             <div className="flex gap-12  items-center mr-12">
                 <nav className="flex gap-4 items-baseline text-white">
-                    <NavLink className={({isActive}) => isActive ? "border-b-2 border-white" : ""} to="/#">crissmejias@gmail.com</NavLink>       
+                    <NavLink className={({isActive}) => isActive ? "border-b-2 border-white" : ""} to="/email">crissmejias@gmail.com</NavLink>       
                     <NavLink className={({isActive}) => isActive ? "border-b-2 border-white" : ""} to="/my-orders">My orders</NavLink>
                     <NavLink className={({isActive}) => isActive ? "border-b-2 border-white" : ""} to="/my-account">My account</NavLink>
-                    <NavLink className={({isActive}) => isActive ? "border-b-2 border-white" : ""} to="/#">Sign out</NavLink>
-                    <NavLink className={({isActive}) => isActive ? "border-b-2 border-white" : ""} to="/checkout">
-                        <ShoppingBagIcon className="h-4 w-4"/>
+                    <NavLink className={({isActive}) => isActive ? "border-b-2 border-white" : ""} to="/sign-out">Sign out</NavLink>
+                    <NavLink className={({isActive}) => isActive ? "border-b-2 border-white relative" : "relative"} to="/checkout">
+                        <div className="relative flex flex-col">
+                            <ShoppingBagIcon className="h-6 w-6"/>
+                            <span className="text-sm bg-red-600/80 rounded-full absolute z-10 -top-1 -right-2 px-1">1</span>
+                        </div>
                     </NavLink>
                 </nav>
             </div>
