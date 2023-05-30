@@ -10,4 +10,5 @@ interface Product {
         image: string,
     };
     images: Array<string>;
+    count: number
 }
