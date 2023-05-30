@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useCallback } from "react";
 interface CartContext {
     //Counter for the cart icon
     count: number,
@@ -15,6 +15,8 @@ interface CartContext {
      // Modal Cart Info
     checkOutStatus:boolean,
     openCheckOut():void
+    getTotalPrice():number,
+    clearProductsCart():void
 }
 const ShopeeCartContext = createContext<CartContext>({} as CartContext);
 const ShopeeCartProvider = ({children}:{children : React.ReactNode}) => {
@@ -62,9 +64,22 @@ const ShopeeCartProvider = ({children}:{children : React.ReactNode}) => {
         const filteredProducts = productsCart.filter(item => item.id !== product.id);
         setProductsCart(() => [...filteredProducts])
     }
+    
+    const getTotalPrice = useCallback(()=>{
+        const totalPrice = productsCart.reduce((sum : number, product : Product )=>{
+            const totalProductPrice = product.count * product.price
+            return sum + totalProductPrice
+        },0)
+        console.log(totalPrice)
+        return totalPrice;
+    },[productsCart])
+    const clearProductsCart = () => {
+        setCount(0);
+        setProductsCart([]);
+    }
     return(
         <ShopeeCartContext.Provider 
-        value={{count, increaseCounter, detailStatus, closeProductDetail,productInfo, openProductDetail,productsCart, addToCart,checkOutStatus, openCheckOut, removeItemFromCart}}>
+        value={{count, increaseCounter, detailStatus, closeProductDetail,productInfo, openProductDetail,productsCart, addToCart,checkOutStatus, openCheckOut, removeItemFromCart, getTotalPrice, clearProductsCart}}>
             {children}
         </ShopeeCartContext.Provider>
     )
