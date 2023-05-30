@@ -11,7 +11,8 @@ interface CartContext {
     // Shopping Cart Products
     productsCart:Product[],
     addToCart(product:Product):void,
-    // Modal Cart Info
+    removeItemFromCart(product:Product):void
+     // Modal Cart Info
     checkOutStatus:boolean,
     openCheckOut():void
 }
@@ -22,10 +23,14 @@ const ShopeeCartProvider = ({children}:{children : React.ReactNode}) => {
     const [productInfo, setProductInfo] = useState<Product>({} as Product);
     const [productsCart, setProductsCart] = useState<Product[]>([] as Product[]);
     const [checkOutStatus, setCheckOutStatus] = useState<boolean>(false);
-    const increaseCounter = () => {
-        setCount(prev => prev +=1)
+    const increaseCounter = (count = 1) => {
+        setCount(prev => prev += count)
+    }
+    const descreaseCounter = (count =1) => {
+        setCount(prev => prev -= count);
     }
     const openProductDetail = (product:Product) => {
+        if(checkOutStatus) openCheckOut()
         setProductInfo(product)
         setDetailStatus(true)
     }
@@ -48,11 +53,18 @@ const ShopeeCartProvider = ({children}:{children : React.ReactNode}) => {
             increaseCounter();
     }
     const openCheckOut = () => {
+        if(detailStatus) closeProductDetail()
         setCheckOutStatus(prev => !prev)
+    }
+    const removeItemFromCart = (product : Product) =>{
+        const {count} = product;
+        descreaseCounter(count);
+        const filteredProducts = productsCart.filter(item => item.id !== product.id);
+        setProductsCart(() => [...filteredProducts])
     }
     return(
         <ShopeeCartContext.Provider 
-        value={{count, increaseCounter, detailStatus, closeProductDetail,productInfo, openProductDetail,productsCart, addToCart,checkOutStatus, openCheckOut}}>
+        value={{count, increaseCounter, detailStatus, closeProductDetail,productInfo, openProductDetail,productsCart, addToCart,checkOutStatus, openCheckOut, removeItemFromCart}}>
             {children}
         </ShopeeCartContext.Provider>
     )
