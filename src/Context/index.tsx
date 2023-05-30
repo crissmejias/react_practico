@@ -6,17 +6,19 @@ interface CartContext {
     // Detail Modal Info
     detailStatus: boolean,
     productInfo: Product,
-    openProductDetail(product : Product):void
+    openProductDetail(product : Product):void,
     closeProductDetail():void,
     // Shopping Cart Products
     productsCart:Product[],
     addToCart(product:Product):void,
-    removeItemFromCart(product:Product):void
+    removeItemFromCart(product:Product):void,
      // Modal Cart Info
     checkOutStatus:boolean,
     openCheckOut():void
     getTotalPrice():number,
-    clearProductsCart():void
+    clearProductsCart():void,
+    // Orders Status
+    createNewOrder(order: Order):void
 }
 const ShopeeCartContext = createContext<CartContext>({} as CartContext);
 const ShopeeCartProvider = ({children}:{children : React.ReactNode}) => {
@@ -25,6 +27,7 @@ const ShopeeCartProvider = ({children}:{children : React.ReactNode}) => {
     const [productInfo, setProductInfo] = useState<Product>({} as Product);
     const [productsCart, setProductsCart] = useState<Product[]>([] as Product[]);
     const [checkOutStatus, setCheckOutStatus] = useState<boolean>(false);
+    const [orders, setOrders] = useState<Order[]>([]);
     const increaseCounter = (count = 1) => {
         setCount(prev => prev += count)
     }
@@ -77,9 +80,28 @@ const ShopeeCartProvider = ({children}:{children : React.ReactNode}) => {
         setCount(0);
         setProductsCart([]);
     }
+    const createNewOrder = (order: Order):void=>{
+        setOrders(prev => [...prev, order])
+        clearProductsCart();
+    }
     return(
         <ShopeeCartContext.Provider 
-        value={{count, increaseCounter, detailStatus, closeProductDetail,productInfo, openProductDetail,productsCart, addToCart,checkOutStatus, openCheckOut, removeItemFromCart, getTotalPrice, clearProductsCart}}>
+        value={{
+            count, 
+            increaseCounter, 
+            detailStatus, 
+            closeProductDetail,
+            productInfo, 
+            openProductDetail,
+            productsCart, 
+            addToCart,
+            checkOutStatus, 
+            openCheckOut, 
+            removeItemFromCart, 
+            getTotalPrice, 
+            clearProductsCart,
+            createNewOrder
+            }}>
             {children}
         </ShopeeCartContext.Provider>
     )

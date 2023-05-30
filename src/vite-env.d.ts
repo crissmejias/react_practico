@@ -12,3 +12,8 @@ interface Product {
     images: Array<string>;
     count: number
 }
+interface Order {
+    date: string,
+    products: Product[],
+    total: number
+}
