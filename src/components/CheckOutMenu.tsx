@@ -12,7 +12,7 @@ const CheckOutMenu = (): JSX.Element => {
                     <XCircleIcon className='h-8 w-8 rounded-full'/>
                 </button>
             </div>
-            {productsCart.map(product => <CheckOutItem product={product}/>)}
+            {productsCart.map(product => <CheckOutItem key={product.id} product={product}/>)}
         </aside>
     )
 }
