@@ -10,7 +10,10 @@ interface CartContext {
     closeProductDetail():void,
     // Shopping Cart Products
     productsCart:Product[],
-    addToCart(product:Product):void
+    addToCart(product:Product):void,
+    // Modal Cart Info
+    checkOutStatus:boolean,
+    openCheckOut():void
 }
 const ShopeeCartContext = createContext<CartContext>({} as CartContext);
 const ShopeeCartProvider = ({children}:{children : React.ReactNode}) => {
@@ -18,6 +21,7 @@ const ShopeeCartProvider = ({children}:{children : React.ReactNode}) => {
     const [detailStatus, setDetailStatus] = useState<boolean>(false);
     const [productInfo, setProductInfo] = useState<Product>({} as Product);
     const [productsCart, setProductsCart] = useState<Product[]>([] as Product[]);
+    const [checkOutStatus, setCheckOutStatus] = useState<boolean>(false);
     const increaseCounter = () => {
         setCount(prev => prev +=1)
     }
@@ -34,7 +38,7 @@ const ShopeeCartProvider = ({children}:{children : React.ReactNode}) => {
             if(productAlreadyInCart){
                 const copyOfProduct = {...productAlreadyInCart};
                 copyOfProduct.count += 1
-                setProductsCart(()=>[...filteredProducts,copyOfProduct])
+                setProductsCart(()=>[copyOfProduct, ...filteredProducts])
             }
             else{
                 const copyOfProduct = {...product};
@@ -43,9 +47,12 @@ const ShopeeCartProvider = ({children}:{children : React.ReactNode}) => {
             }
             increaseCounter();
     }
+    const openCheckOut = () => {
+        setCheckOutStatus(prev => !prev)
+    }
     return(
         <ShopeeCartContext.Provider 
-        value={{count, increaseCounter, detailStatus, closeProductDetail,productInfo, openProductDetail,productsCart, addToCart}}>
+        value={{count, increaseCounter, detailStatus, closeProductDetail,productInfo, openProductDetail,productsCart, addToCart,checkOutStatus, openCheckOut}}>
             {children}
         </ShopeeCartContext.Provider>
     )

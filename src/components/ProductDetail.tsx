@@ -3,7 +3,6 @@ import { useContext } from 'react';
 import { ShopeeCartContext } from '../Context';
 const ProductDetail = ():JSX.Element => {
     const {productInfo,closeProductDetail} = useContext(ShopeeCartContext)
-    console.log(productInfo)
     return(
         <aside className="w-[360px] h-[80vh] flex flex-col fixed top-[68px] right-2 bg-white border-[1px] border-black rounded-lg">
             <div className="flex justify-between items-center p-6">

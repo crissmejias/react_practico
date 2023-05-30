@@ -3,7 +3,7 @@ import {ShoppingBagIcon} from '@heroicons/react/24/solid'
 import { useContext } from "react"
 import { ShopeeCartContext } from "../Context"
 const Header = (): JSX.Element  => {
-    const {count} = useContext(ShopeeCartContext);
+    const {count, openCheckOut} = useContext(ShopeeCartContext);
     return(
         <>
         <header className="w-full py-4 bg-gray-300 flex justify-between ">
@@ -24,7 +24,7 @@ const Header = (): JSX.Element  => {
                     <NavLink className={({isActive}) => isActive ? "border-b-2 border-black" : ""} to="/my-orders">My orders</NavLink>
                     <NavLink className={({isActive}) => isActive ? "border-b-2 border-black" : ""} to="/my-account">My account</NavLink>
                     <NavLink className={({isActive}) => isActive ? "border-b-2 border-black" : ""} to="/sign-out">Sign out</NavLink>
-                    <NavLink className={({isActive}) => isActive ? "border-b-2 border-black relative" : "relative"} to="/my-order">
+                    <NavLink className={({isActive}) => isActive ? "border-b-2 border-black relative" : "relative"} to='/' onClick={openCheckOut}>
                         <div className="relative flex flex-col">
                             <ShoppingBagIcon className="h-6 w-6"/>
                             <span className="text-sm text-white bg-red-600/80 rounded-full absolute z-10 -top-1 -right-4 px-2">{count}</span>
