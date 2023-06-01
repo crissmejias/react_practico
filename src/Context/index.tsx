@@ -18,6 +18,7 @@ interface CartContext {
     getTotalPrice():number,
     clearProductsCart():void,
     // Orders Status
+    orders: Order[]
     createNewOrder(order: Order):void
 }
 const ShopeeCartContext = createContext<CartContext>({} as CartContext);
@@ -100,6 +101,7 @@ const ShopeeCartProvider = ({children}:{children : React.ReactNode}) => {
             removeItemFromCart, 
             getTotalPrice, 
             clearProductsCart,
+            orders,
             createNewOrder
             }}>
             {children}

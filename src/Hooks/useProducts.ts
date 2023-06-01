@@ -4,7 +4,7 @@ const useProducts = () => {
     const [products, setProducts] = useState<Array<Product>>([])
     useEffect(()=> {
         async function fetchProducts(){
-            const data = await fetch('https://api.escuelajs.co/api/v1/products?offset=10&limit=10')
+            const data = await fetch('https://api.escuelajs.co/api/v1/products?offset=&limit=12')
             const dataToJson = await data.json()
             setProducts(dataToJson);
         }
