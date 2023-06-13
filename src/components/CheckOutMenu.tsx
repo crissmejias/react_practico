@@ -3,14 +3,16 @@ import { useContext } from 'react';
 import { ShopeeCartContext } from '../Context';
 import { CheckOutItem } from './CheckOutItem';
 import { useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 const CheckOutMenu = (): React.ReactNode => {
     const {getTotalPrice,productsCart, openCheckOut, createNewOrder} = useContext(ShopeeCartContext);
     const totalPrice = getTotalPrice();
     const navigate = useNavigate();
     const handleCheckOut = () => {
         const date = new Date().toLocaleString()
-        createNewOrder({date,total: totalPrice, products: productsCart})
-        navigate('/my-orders/last')
+        createNewOrder({date,total: totalPrice, products: productsCart, id: uuidv4()})
+        navigate('/my-orders/last');
+        openCheckOut();
     }
     return(
         <aside className="overflow-scroll w-[460px] h-[70vh] flex flex-col fixed top-[68px] right-2 bg-white border-[1px] border-black rounded-lg">

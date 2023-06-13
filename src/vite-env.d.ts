@@ -13,6 +13,7 @@ interface Product {
     count: number
 }
 interface Order {
+    id: string,
     date: string,
     products: Product[],
     total: number

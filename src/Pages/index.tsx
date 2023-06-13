@@ -23,6 +23,7 @@ function App() {
         <Route path="/signin" element={<SignIn/>}/>
         <Route path="/my-orders" element={<MyOrders/>}/>
         <Route path="/my-orders/last" element={<MyOrder/>}/>
+        <Route path="/my-orders/:id" element={<MyOrder/>}/>
         <Route path="/checkout" element={<h1>Checkout</h1>}/>
         <Route path="/*" element={<NotFound/>}/>
       </Routes>

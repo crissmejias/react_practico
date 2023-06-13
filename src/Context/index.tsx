@@ -20,6 +20,7 @@ interface CartContext {
     // Orders Status
     orders: Order[]
     createNewOrder(order: Order):void
+    removeOrder(id:string):void
 }
 const ShopeeCartContext = createContext<CartContext>({} as CartContext);
 const ShopeeCartProvider = ({children}:{children : React.ReactNode}) => {
@@ -74,7 +75,6 @@ const ShopeeCartProvider = ({children}:{children : React.ReactNode}) => {
             const totalProductPrice = product.count * product.price
             return sum + totalProductPrice
         },0)
-        console.log(totalPrice)
         return totalPrice;
     },[productsCart])
     const clearProductsCart = () => {
@@ -84,6 +84,10 @@ const ShopeeCartProvider = ({children}:{children : React.ReactNode}) => {
     const createNewOrder = (order: Order):void=>{
         setOrders(prev => [...prev, order])
         clearProductsCart();
+    }
+    const removeOrder = (id: string): void =>{
+        const filteredOrders = orders.filter(order => order.id !== id)
+        setOrders(filteredOrders)
     }
     return(
         <ShopeeCartContext.Provider 
@@ -102,7 +106,8 @@ const ShopeeCartProvider = ({children}:{children : React.ReactNode}) => {
             getTotalPrice, 
             clearProductsCart,
             orders,
-            createNewOrder
+            createNewOrder,
+            removeOrder
             }}>
             {children}
         </ShopeeCartContext.Provider>
